@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bake One | Admin Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="login-page">
+    <nav class="navbar">
+        <div class="logo">Bake One</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Back to Store</a></li>
+        </ul>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-card">
+            <h2>Admin Access</h2>
+            <p>Enter password to manage inventory</p>
+            <form id="login-form">
+                <input type="password" id="password" class="admin-input" placeholder="Password" required autofocus>
+                <div id="login-error" class="error-msg"></div>
+                <button type="submit" class="cta-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('login-error');
+
+            // Hardcoded password for client simplicity
+            if (password === 'admin123') {
+                sessionStorage.setItem('bakeone_admin_session', 'true');
+                window.location.href = 'admin.html';
+            } else {
+                error.textContent = 'Invalid password. Please try again.';
+                document.getElementById('password').value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>

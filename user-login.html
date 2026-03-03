@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bake One | Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="premium-login-body">
+    <!-- 3D Floating Bakery Scene -->
+    <div class="bakery-scene" id="bakery-scene">
+        <!-- Ambient glow orbs -->
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <nav class="navbar"
+        style="background: transparent; backdrop-filter: none; position: absolute; box-shadow: none; z-index: 20;">
+        <div class="logo">Bake One</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-back-link">&larr; Back to Shop</a></li>
+        </ul>
+    </nav>
+
+    <div class="premium-login-container">
+        <!-- Center Glassmorphism Form Area -->
+        <div class="premium-login-card" id="login-card">
+            <h2>Bake One</h2>
+            <p>Sign in to access premium tools and pastry collections.</p>
+
+            <form id="storefront-login-form">
+                <div class="premium-input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="user-email" placeholder="baker@example.com" required>
+                </div>
+                <div class="premium-input-group">
+                    <label>Password</label>
+                    <input type="password" id="user-password" placeholder="••••••••" required>
+                </div>
+
+                <div class="premium-forgot-pass">
+                    <a href="#">Recover Password</a>
+                </div>
+
+                <button type="submit" class="premium-submit-btn">Sign In</button>
+
+                <p class="premium-signup">New to Bake One? <a href="#">Create Account</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 3D Floating Bakery Items Generator
+        const scene = document.getElementById('bakery-scene');
+
+        // Bakery item definitions with SVG icons for crisp 3D rendering
+        const bakeryItems = [
+            {
+                name: 'cake',
+                emoji: '🎂',
+                size: [50, 90],
+                shadow: 'rgba(255, 107, 107, 0.4)'
+            },
+            {
+                name: 'cupcake',
+                emoji: '🧁',
+                size: [40, 75],
+                shadow: 'rgba(243, 166, 131, 0.4)'
+            },
+            {
+                name: 'icecream',
+                emoji: '🍦',
+                size: [45, 80],
+                shadow: 'rgba(255, 183, 197, 0.4)'
+            },
+            {
+                name: 'cherry',
+                emoji: '🍒',
+                size: [30, 55],
+                shadow: 'rgba(220, 50, 50, 0.4)'
+            },
+            {
+                name: 'donut',
+                emoji: '🍩',
+                size: [40, 70],
+                shadow: 'rgba(210, 140, 80, 0.4)'
+            },
+            {
+                name: 'cookie',
+                emoji: '🍪',
+                size: [35, 60],
+                shadow: 'rgba(180, 130, 70, 0.4)'
+            },
+            {
+                name: 'cream',
+                emoji: '🍰',
+                size: [45, 80],
+                shadow: 'rgba(255, 220, 180, 0.4)'
+            },
+            {
+                name: 'lollipop',
+                emoji: '🍭',
+                size: [35, 65],
+                shadow: 'rgba(200, 100, 255, 0.4)'
+            },
+            {
+                name: 'chocolate',
+                emoji: '🍫',
+                size: [35, 60],
+                shadow: 'rgba(120, 70, 30, 0.4)'
+            },
+            {
+                name: 'strawberry',
+                emoji: '🍓',
+                size: [30, 50],
+                shadow: 'rgba(255, 80, 80, 0.4)'
+            },
+            {
+                name: 'icecreamcone',
+                emoji: '🍨',
+                size: [40, 70],
+                shadow: 'rgba(255, 200, 150, 0.4)'
+            },
+            {
+                name: 'pie',
+                emoji: '🥧',
+                size: [40, 70],
+                shadow: 'rgba(200, 140, 60, 0.4)'
+            }
+        ];
+
+        // Animation keyframe names for variety
+        const animationNames = [
+            'float3D_1', 'float3D_2', 'float3D_3', 'float3D_4',
+            'float3D_5', 'float3D_6'
+        ];
+
+        // Create floating bakery items
+        const totalItems = 26;
+
+        // Avoid center zone where login card is (approx 30%-70% X, 15%-85% Y)
+        function getEdgePosition() {
+            let x, y;
+            do {
+                x = Math.random() * 100;
+                y = Math.random() * 100;
+            } while (x > 28 && x < 72 && y > 12 && y < 88);
+            return { x, y };
+        }
+
+        for (let i = 0; i < totalItems; i++) {
+            const item = bakeryItems[Math.floor(Math.random() * bakeryItems.length)];
+            const el = document.createElement('div');
+            el.className = 'bakery-float-item';
+
+            // Random size within item's range
+            const size = item.size[0] + Math.random() * (item.size[1] - item.size[0]);
+
+            // Random position avoiding center card area
+            const pos = getEdgePosition();
+            const leftPos = pos.x;
+            const topPos = pos.y;
+
+            // Random animation
+            const animName = animationNames[Math.floor(Math.random() * animationNames.length)];
+            const duration = 8 + Math.random() * 14; // 8s to 22s
+            const delay = Math.random() * -20; // negative delay for instant spread
+
+            // Random initial rotation
+            const rotX = Math.random() * 360;
+            const rotY = Math.random() * 360;
+            const rotZ = Math.random() * 360;
+
+            // Depth layering via z-index and opacity
+            const depth = Math.random();
+            const opacity = 0.4 + depth * 0.5; // 0.4 to 0.9
+            const blur = depth < 0.3 ? 2 : 0; // blur far items
+            const zIndex = Math.floor(depth * 5);
+
+            el.innerHTML = item.emoji;
+            el.style.cssText = `
+                left: ${leftPos}%;
+                top: ${topPos}%;
+                font-size: ${size}px;
+                opacity: ${opacity};
+                z-index: ${zIndex};
+                animation: ${animName} ${duration}s ease-in-out ${delay}s infinite;
+                filter: blur(${blur}px) drop-shadow(0 10px 25px ${item.shadow});
+                --rot-x: ${rotX}deg;
+                --rot-y: ${rotY}deg;
+                --rot-z: ${rotZ}deg;
+            `;
+
+            scene.appendChild(el);
+        }
+
+        // Subtle mouse parallax effect on bakery items
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            scene.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // Handle login submission with smooth glass-shatter/fade leaving animation
+        document.getElementById('storefront-login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('user-email').value;
+            const card = document.getElementById('login-card');
+
+            // Trigger the CSS leaving animation
+            card.classList.add('leaving');
+
+            // Wait for the animation to finish (600ms) before actual redirect
+            setTimeout(() => {
+                sessionStorage.setItem('bakeone_user_session', email);
+                window.location.href = 'index.html';
+            }, 600);
+        });
+    </script>
+</body>
+
+</html>
